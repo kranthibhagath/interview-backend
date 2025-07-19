@@ -1,11 +1,10 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-    tententID: { type: mongoose.Schema.Types.ObjectId, ref: 'Tenant' },
     name:{ type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    role:{ type:String, enum: ['admin','editor', 'viewer'], default: 'viewer' },
+    role:{ type:String, enum: ['admin','patient'], default: 'patient' },
 });
 
 module.exports = mongoose.model('User', userSchema);

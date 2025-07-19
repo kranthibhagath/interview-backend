@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 
 
 const authRoute = require('./routes/authRoutes');
+const patientDataRoutes = require('./routes/patientDataRoutes');
 
 const app = express();
 
@@ -18,9 +19,7 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
 
-
 app.use('/api/auth', authRoute);
-// app.use('/api/users', userRoutes);
-// app.use('/api/posts', postRoutes);
+app.use('/api/patient-data', patientDataRoutes);
 
 module.exports = app;

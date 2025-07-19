@@ -4,11 +4,12 @@ const User = require('../models/users');
 
 exports.login = async (req, res) => {
     const { email, password } = req.body;
+    console.log('Login data:', { email, password });
     try{
         const user = await User.findOne({ email });
-        if (!user) return res.status(400).json({ message: 'invalid credentials' });
+        if (!user) return res.status(200).json({ message: 'invalid credentials' });
         const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) return res.status(400).json({ message: 'invalid credentials' });
+        if (!isMatch) return res.status(200).json({ message: 'invalid credentials' });
 
         const token = jwtHelper.generateToken(user);
         return res.status(200).json({ token, user: { id: user._id, name: user.name, role: user.role } });
@@ -23,7 +24,7 @@ exports.signup = async (req, res) => {
     console.log('Signup data:', { name, email, password, role });
     try {
         const existingUser = await User.findOne({ email });
-        if (existingUser) return res.status(400).json({ message: 'Email already exists' });
+        if (existingUser) return res.status(200).json({ message: 'Email already exists' });
         const hashedPassword = await bcrypt.hash(password, 10);
         const newUser = new User({ name, email, password: hashedPassword, role });
         await newUser.save();
